@@ -6,21 +6,21 @@ using UnityEngine;
 public class CameraConfiguration
 {
     [Range(0,360)]
-    public int Yaw;
+    public float yaw;
     [Range(-90, 90)]
-    public int pitch;
+    public float pitch;
     [Range(-180, 180)]
-    public int roll;
+    public float roll;
 
     public Vector3 pivot;
 
     public float distance;
     [Range (0,180)]
-    public int fov;
+    public float fov;
 
     public Quaternion GetRotation()
     {
-        return Quaternion.Euler(Yaw, pitch, roll);
+        return Quaternion.Euler(yaw, pitch, roll);
     }
     public Vector3 GetPosition()
     {
@@ -41,7 +41,7 @@ public class CameraConfiguration
     public static CameraConfiguration operator +(CameraConfiguration a, CameraConfiguration b)
     {
         CameraConfiguration newConfig = new CameraConfiguration();
-        newConfig.Yaw = a.Yaw + b.Yaw;
+        newConfig.yaw = a.yaw + b.yaw;
         newConfig.pitch = a.pitch + b.pitch;
         newConfig.roll = a.roll + b.roll;
         newConfig.distance = a.distance + b.distance;
@@ -54,12 +54,26 @@ public class CameraConfiguration
     public static CameraConfiguration operator -(CameraConfiguration a, CameraConfiguration b)
     {
         CameraConfiguration newConfig = new CameraConfiguration();
-        newConfig.Yaw = a.Yaw - b.Yaw;
+        newConfig.yaw = a.yaw - b.yaw;
         newConfig.pitch = a.pitch - b.pitch;
         newConfig.roll = a.roll - b.roll;
         newConfig.distance = a.distance - b.distance;
         newConfig.fov = a.fov - b.fov;
         newConfig.pivot = a.pivot - b.pivot;
+
+        return newConfig;
+    }
+
+
+    public static CameraConfiguration operator *(CameraConfiguration a, float b)
+    {
+        CameraConfiguration newConfig = new CameraConfiguration();
+        newConfig.yaw = a.yaw * b;
+        newConfig.pitch = a.pitch * b;
+        newConfig.roll = a.roll * b;
+        newConfig.distance = a.distance * b;
+        newConfig.fov = a.fov * b;
+        newConfig.pivot = a.pivot * b;
 
         return newConfig;
     }

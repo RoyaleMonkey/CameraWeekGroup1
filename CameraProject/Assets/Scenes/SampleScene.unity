@@ -409,13 +409,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   configWeight: 1
   activeViews: []
+  targetConfig:
+    yaw: 0
+    pitch: 0
+    roll: 0
+    pivot: {x: 0, y: 0, z: 0}
+    distance: 0
+    fov: 0
   activeConfig:
-    Yaw: 0
+    yaw: 0
     pitch: 0
     roll: 0
     pivot: {x: 10, y: 5, z: 0}
     distance: 5
     fov: 60
+  cameraSpeed: 5
 --- !u!1 &1683069159
 GameObject:
   m_ObjectHideFlags: 0

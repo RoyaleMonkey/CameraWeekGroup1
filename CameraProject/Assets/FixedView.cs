@@ -13,7 +13,7 @@ public class FixedView : AView
     {
         CameraConfiguration config = new CameraConfiguration();
         
-        config.Yaw = yaw;
+        config.yaw = yaw;
         config.pitch = pitch;
         config.roll = roll;
         config.fov = fov;

@@ -51,7 +51,7 @@ public class CameraController : MonoBehaviour
             if (activeViews.Count < 1)
                 return;
 
-            activeConfig = activeViews[0].GetConfiguration();
+            activeConfig = config;
         }
 
         if (cameraComponent == null)
@@ -59,14 +59,14 @@ public class CameraController : MonoBehaviour
 
         if(cameraSpeed * Time.deltaTime < 1)
         {
-
+            activeConfig = activeConfig + (targetConfig - activeConfig) * cameraSpeed * Time.deltaTime;
         }
         else
         {
             activeConfig = config;
         }
 
-        Quaternion orientation = Quaternion.Euler(activeConfig.pitch, activeConfig.Yaw, activeConfig.roll);
+        Quaternion orientation = Quaternion.Euler(activeConfig.pitch, activeConfig.yaw, activeConfig.roll);
         transform.rotation = orientation;
         Vector3 offset = orientation * (Vector3.back * activeConfig.distance);
         transform.position = activeConfig.pivot + offset;
@@ -78,10 +78,10 @@ public class CameraController : MonoBehaviour
         CameraConfiguration lerpedConfig = new CameraConfiguration();
 
         lerpedConfig.distance = Mathf.Lerp(configA.distance, configB.distance, configWeight);
-        lerpedConfig.Yaw = (int) Mathf.Lerp(configA.Yaw, configB.Yaw, configWeight);
-        lerpedConfig.pitch = (int) Mathf.Lerp(configA.pitch, configB.pitch, configWeight);
-        lerpedConfig.roll = (int) Mathf.Lerp(configA.roll, configB.roll, configWeight);
-        lerpedConfig.fov = (int) Mathf.Lerp(configA.fov, configB.fov, configWeight);
+        lerpedConfig.yaw = Mathf.Lerp(configA.yaw, configB.yaw, configWeight);
+        lerpedConfig.pitch = Mathf.Lerp(configA.pitch, configB.pitch, configWeight);
+        lerpedConfig.roll = Mathf.Lerp(configA.roll, configB.roll, configWeight);
+        lerpedConfig.fov = Mathf.Lerp(configA.fov, configB.fov, configWeight);
         lerpedConfig.pivot = Vector3.Lerp(configA.pivot, configB.pivot, configWeight);
         targetConfig = lerpedConfig;
         return lerpedConfig;
@@ -101,7 +101,7 @@ public class CameraController : MonoBehaviour
         {
             CameraConfiguration config = view.GetConfiguration();
             distance += distance * weight;
-            yaw += config.Yaw*view.weight;
+            yaw += config.yaw*view.weight;
             pitch += config.pitch * view.weight;
             roll += config.roll * view.weight;
             fov += config.fov * view.weight;
@@ -111,10 +111,10 @@ public class CameraController : MonoBehaviour
 
         CameraConfiguration InterpolatedConfig = new CameraConfiguration();
         InterpolatedConfig.distance = distance / weight;
-        InterpolatedConfig.Yaw = (int) (yaw / weight);
-        InterpolatedConfig.pitch = (int) (pitch / weight);
-        InterpolatedConfig.roll = (int) (roll / weight);
-        InterpolatedConfig.fov = (int) (fov / weight);
+        InterpolatedConfig.yaw = (yaw / weight);
+        InterpolatedConfig.pitch = (pitch / weight);
+        InterpolatedConfig.roll = (roll / weight);
+        InterpolatedConfig.fov = (fov / weight);
         InterpolatedConfig.pivot = pivot / weight;
 
         return InterpolatedConfig;
