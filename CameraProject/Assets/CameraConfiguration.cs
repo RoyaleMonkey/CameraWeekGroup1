@@ -6,17 +6,17 @@ using UnityEngine;
 public class CameraConfiguration
 {
     [Range(0,360)]
-    public float yaw;
+    public float yaw = 0;
     [Range(-90, 90)]
-    public float pitch;
+    public float pitch = 0;
     [Range(-180, 180)]
-    public float roll;
+    public float roll = 0;
 
-    public Vector3 pivot;
+    public Vector3 pivot = Vector3.zero;
 
-    public float distance;
+    public float distance = 0;
     [Range (0,180)]
-    public float fov;
+    public float fov = 0;
 
     public Quaternion GetRotation()
     {
@@ -74,6 +74,19 @@ public class CameraConfiguration
         newConfig.distance = a.distance * b;
         newConfig.fov = a.fov * b;
         newConfig.pivot = a.pivot * b;
+
+        return newConfig;
+    }
+
+    public static CameraConfiguration operator /(CameraConfiguration a, float b)
+    {
+        CameraConfiguration newConfig = new CameraConfiguration();
+        newConfig.yaw = a.yaw / b;
+        newConfig.pitch = a.pitch / b;
+        newConfig.roll = a.roll / b;
+        newConfig.distance = a.distance / b;
+        newConfig.fov = a.fov / b;
+        newConfig.pivot = a.pivot / b;
 
         return newConfig;
     }

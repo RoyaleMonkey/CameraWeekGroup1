@@ -89,35 +89,22 @@ public class CameraController : MonoBehaviour
 
     private CameraConfiguration InterpolateView()
     {
-        float distance = 0;
-        float yaw = 0;
-        float pitch = 0;
-        float roll = 0;
-        float fov = 0;
+        CameraConfiguration newConfig = new CameraConfiguration();
         float weight = 0;
-        Vector3 pivot = Vector3.zero;
 
         foreach (var view in activeViews)
         {
             CameraConfiguration config = view.GetConfiguration();
-            distance += distance * weight;
-            yaw += config.yaw*view.weight;
-            pitch += config.pitch * view.weight;
-            roll += config.roll * view.weight;
-            fov += config.fov * view.weight;
+            newConfig += config*view.weight;
             weight += view.weight;
-            pivot += config.pivot * view.weight;
         }
 
-        CameraConfiguration InterpolatedConfig = new CameraConfiguration();
-        InterpolatedConfig.distance = distance / weight;
-        InterpolatedConfig.yaw = (yaw / weight);
-        InterpolatedConfig.pitch = (pitch / weight);
-        InterpolatedConfig.roll = (roll / weight);
-        InterpolatedConfig.fov = (fov / weight);
-        InterpolatedConfig.pivot = pivot / weight;
+        if (weight != 0)
+            newConfig /= weight;
+        else
+            newConfig = targetConfig;
 
-        return InterpolatedConfig;
+        return newConfig;
     }
 
     private void OnDrawGizmos()
