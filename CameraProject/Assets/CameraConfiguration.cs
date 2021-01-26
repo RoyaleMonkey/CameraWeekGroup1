@@ -37,4 +37,30 @@ public class CameraConfiguration
         Gizmos.DrawFrustum(Vector3.zero, fov, 0.5f, 0f, Camera.main.aspect);
         Gizmos.matrix = Matrix4x4.identity;
     }
+
+    public static CameraConfiguration operator +(CameraConfiguration a, CameraConfiguration b)
+    {
+        CameraConfiguration newConfig = new CameraConfiguration();
+        newConfig.Yaw = a.Yaw + b.Yaw;
+        newConfig.pitch = a.pitch + b.pitch;
+        newConfig.roll = a.roll + b.roll;
+        newConfig.distance = a.distance + b.distance;
+        newConfig.fov = a.fov + b.fov;
+        newConfig.pivot = a.pivot + b.pivot;
+
+        return newConfig;
+    }
+
+    public static CameraConfiguration operator -(CameraConfiguration a, CameraConfiguration b)
+    {
+        CameraConfiguration newConfig = new CameraConfiguration();
+        newConfig.Yaw = a.Yaw - b.Yaw;
+        newConfig.pitch = a.pitch - b.pitch;
+        newConfig.roll = a.roll - b.roll;
+        newConfig.distance = a.distance - b.distance;
+        newConfig.fov = a.fov - b.fov;
+        newConfig.pivot = a.pivot - b.pivot;
+
+        return newConfig;
+    }
 }
