@@ -388,8 +388,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0, y: 0.1736482, z: 0, w: 0.9848078}
-  m_LocalPosition: {x: -1.7101007, y: 0, z: -4.698463}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10, y: 5, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -407,7 +407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf711341c55989438304c5547d15d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  configWeight: 0
+  configWeight: 1
   camConfigs:
   - Yaw: 20
     pitch: 0
@@ -416,6 +416,13 @@ MonoBehaviour:
     distance: 5
     fov: 60
   - Yaw: 0
+    pitch: 0
+    roll: 0
+    pivot: {x: 10, y: 5, z: 0}
+    distance: 5
+    fov: 60
+  activeConfig:
+    Yaw: 0
     pitch: 0
     roll: 0
     pivot: {x: 10, y: 5, z: 0}

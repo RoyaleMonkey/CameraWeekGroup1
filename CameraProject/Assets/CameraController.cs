@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
     public float configWeight = 0;
 
     public List<CameraConfiguration> camConfigs = new List<CameraConfiguration>();
-    
+    public CameraConfiguration activeConfig;
     private Camera cameraComponent = null;
 
     #region Singleton
@@ -51,13 +51,13 @@ public class CameraController : MonoBehaviour
         lerpedConfig.roll = (int)Mathf.Lerp(configA.roll, configB.roll, configWeight);
         lerpedConfig.fov = (int)Mathf.Lerp(configA.fov, configB.fov, configWeight);
         lerpedConfig.pivot = Vector3.Lerp(configA.pivot, configB.pivot, configWeight);
-
+        activeConfig = lerpedConfig;
         return lerpedConfig;
     }
 
     private void OnDrawGizmos()
     {
-        camConfigs[0].DrawGizmos(Color.red);
+        activeConfig.DrawGizmos(Color.red);
     }
     private void OnValidate()
     {
