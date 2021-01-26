@@ -24,11 +24,24 @@ public class FixedFollowView : AView
         float targetYaw = Mathf.Atan2(targetDir.x, targetDir.z) * Mathf.Rad2Deg;
         float targetPitch = -Mathf.Asin(targetDir.y) * Mathf.Rad2Deg;
 
-        if(Mathf.Abs(centralYaw-targetYaw) < 180)
+        float yawDif = centralYaw - targetYaw;
+
+        if ((yawDif) > 180)
+            yawDif -= 360;
+        else if (yawDif < -180)
+            yawDif += 360;
+        if (Mathf.Abs(yawDif) < yawOffsetMax)
         {
             config.yaw = Mathf.Atan2(targetDir.x, targetDir.z) * Mathf.Rad2Deg;
         }
-        if (Mathf.Abs(centralPitch - centralPitch) < 90)
+        else
+        {
+            if (yawDif > 0)
+                config.yaw = centralYaw - yawOffsetMax;
+            else
+                config.yaw = centralYaw + yawOffsetMax;
+        }
+        if (Mathf.Abs(centralPitch - centralPitch) < pitchOffsetMax)
         {
             config.pitch = -Mathf.Asin(targetDir.y) * Mathf.Rad2Deg;
         }
