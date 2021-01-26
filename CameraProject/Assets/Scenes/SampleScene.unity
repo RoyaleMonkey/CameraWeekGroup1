@@ -363,7 +363,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 90
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -388,8 +388,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.21678829, y: 0.7983214, z: 0.11536704, w: -0.5498874}
-  m_LocalPosition: {x: 4.1397667, y: -2.1130915, z: 1.8431429}
+  m_LocalRotation: {x: 0, y: 0.1736482, z: 0, w: 0.9848078}
+  m_LocalPosition: {x: -1.7101007, y: 0, z: -4.698463}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -407,17 +407,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf711341c55989438304c5547d15d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  configWeight: 1
+  configWeight: 0
   camConfigs:
-  - Yaw: 85
-    pitch: 31
-    roll: -65
-    pivot: {x: 0, y: 0, z: 0}
-    distance: 10
-    fov: 90
-  - Yaw: 246
-    pitch: -25
-    roll: 14
+  - Yaw: 20
+    pitch: 0
+    roll: 0
     pivot: {x: 0, y: 0, z: 0}
     distance: 5
-    fov: 90
+    fov: 60
+  - Yaw: 0
+    pitch: 0
+    roll: 0
+    pivot: {x: 10, y: 5, z: 0}
+    distance: 5
+    fov: 60

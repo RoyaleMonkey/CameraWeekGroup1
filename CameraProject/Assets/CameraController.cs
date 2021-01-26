@@ -41,6 +41,10 @@ public class CameraController : MonoBehaviour
         return lerpedConfig;
     }
 
+    private void OnDrawGizmos()
+    {
+        camConfigs[0].DrawGizmos(Color.red);
+    }
     private void OnValidate()
     {
         SetConfig(LerpConfigs(camConfigs[0], camConfigs[1], configWeight));
