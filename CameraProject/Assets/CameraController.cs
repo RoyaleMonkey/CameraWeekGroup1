@@ -6,8 +6,11 @@ public class CameraController : MonoBehaviour
     [Range(0, 1)] public float configWeight = 0;
 
     public List<AView> activeViews = new List<AView>();
+    public CameraConfiguration targetConfig;
     public CameraConfiguration activeConfig;
     private Camera cameraComponent = null;
+
+    public float cameraSpeed = 2.0f;
 
     #region Singleton
 
@@ -30,8 +33,10 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        activeConfig = InterpolateView();
-        SetConfig(activeConfig);
+        targetConfig = InterpolateView();
+        SetConfig(targetConfig);
+
+
     }
 
     public void AddView(AView view) => activeViews.Add(view);
@@ -40,14 +45,32 @@ public class CameraController : MonoBehaviour
 
     public void SetConfig(CameraConfiguration config)
     {
+
+        if(activeConfig == null)
+        {
+            if (activeViews.Count < 1)
+                return;
+
+            activeConfig = activeViews[0].GetConfiguration();
+        }
+
         if (cameraComponent == null)
             cameraComponent = GetComponent<Camera>();
 
-        Quaternion orientation = Quaternion.Euler(config.pitch, config.Yaw, config.roll);
+        if(cameraSpeed * Time.deltaTime < 1)
+        {
+
+        }
+        else
+        {
+            activeConfig = config;
+        }
+
+        Quaternion orientation = Quaternion.Euler(activeConfig.pitch, activeConfig.Yaw, activeConfig.roll);
         transform.rotation = orientation;
-        Vector3 offset = orientation * (Vector3.back * config.distance);
-        transform.position = config.pivot + offset;
-        cameraComponent.fieldOfView = config.fov;
+        Vector3 offset = orientation * (Vector3.back * activeConfig.distance);
+        transform.position = activeConfig.pivot + offset;
+        cameraComponent.fieldOfView = activeConfig.fov;
     }
 
     public CameraConfiguration LerpConfigs(CameraConfiguration configA, CameraConfiguration configB, float configWeight)
@@ -60,7 +83,7 @@ public class CameraController : MonoBehaviour
         lerpedConfig.roll = (int) Mathf.Lerp(configA.roll, configB.roll, configWeight);
         lerpedConfig.fov = (int) Mathf.Lerp(configA.fov, configB.fov, configWeight);
         lerpedConfig.pivot = Vector3.Lerp(configA.pivot, configB.pivot, configWeight);
-        activeConfig = lerpedConfig;
+        targetConfig = lerpedConfig;
         return lerpedConfig;
     }
 
@@ -99,7 +122,7 @@ public class CameraController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        activeConfig.DrawGizmos(Color.red);
+        targetConfig.DrawGizmos(Color.red);
     }
 
 
