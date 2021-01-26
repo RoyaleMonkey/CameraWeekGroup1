@@ -1,18 +1,32 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
     [Range(0, 1)]
-    public float configWeight;
+    public float configWeight = 0;
 
-    public List<CameraConfiguration> camConfigs;
+    public List<CameraConfiguration> camConfigs = new List<CameraConfiguration>();
     
-    private Camera cameraComponent;
+    private Camera cameraComponent = null;
 
-    void Awake()
+    #region Singleton
+
+    private static CameraController instance;
+
+    public static CameraController Instance
     {
+        get => instance;
+    }
+
+    #endregion
+
+    private void Awake()
+    {
+        if (instance)
+            Destroy(gameObject);
+        else
+            instance = this;
     }
 
     public void SetConfig(CameraConfiguration config)
