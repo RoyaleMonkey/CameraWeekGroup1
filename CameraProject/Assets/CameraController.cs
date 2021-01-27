@@ -109,7 +109,7 @@ public class CameraController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        targetConfig.DrawGizmos(Color.red);
+        activeConfig.DrawGizmos(Color.red);
     }
 
 

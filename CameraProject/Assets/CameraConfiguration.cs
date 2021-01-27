@@ -20,7 +20,7 @@ public class CameraConfiguration
 
     public Quaternion GetRotation()
     {
-        return Quaternion.Euler(yaw, pitch, roll);
+        return Quaternion.Euler(pitch, yaw, roll);
     }
     public Vector3 GetPosition()
     {
