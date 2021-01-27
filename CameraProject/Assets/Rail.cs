@@ -49,8 +49,12 @@ public class Rail : MonoBehaviour
             else
             {
                 position = Vector3.Lerp(nodes[i].transform.position, nodes[i + 1].transform.position, distance / distanceBetweenPoints);
+                return position;
             }
         }
+
+        distanceBetweenPoints = Vector3.Distance(nodes[nodes.Count - 1].transform.position, nodes[0].transform.position);
+        position = Vector3.Lerp(nodes[nodes.Count - 1].transform.position, nodes[0].transform.position, distance / distanceBetweenPoints);
 
         return position;
     }
