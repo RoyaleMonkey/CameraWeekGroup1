@@ -158,8 +158,8 @@ MonoBehaviour:
   fov: 60
   target: {fileID: 354324255}
   centralPoint: {fileID: 772223970}
-  yawOffsetMax: 30
-  pitchOffsetMax: 0
+  yawOffsetMax: 90
+  pitchOffsetMax: 30
 --- !u!4 &256988669
 Transform:
   m_ObjectHideFlags: 0
@@ -540,8 +540,8 @@ MonoBehaviour:
   fov: 60
   target: {fileID: 354324255}
   centralPoint: {fileID: 1686872128}
-  yawOffsetMax: 0
-  pitchOffsetMax: 0
+  yawOffsetMax: 90
+  pitchOffsetMax: 30
 --- !u!4 &1120897198
 Transform:
   m_ObjectHideFlags: 0

@@ -41,9 +41,23 @@ public class FixedFollowView : AView
             else
                 config.yaw = centralYaw + yawOffsetMax;
         }
-        if (Mathf.Abs(centralPitch - centralPitch) < pitchOffsetMax)
+
+        float pitchDif = centralPitch - targetPitch;
+
+        if (pitchDif > 180)
+            pitchDif -= 360;
+        else if (pitchDif < -180)
+            pitchDif += 360;
+        if (Mathf.Abs(pitchDif) < pitchOffsetMax)
         {
             config.pitch = -Mathf.Asin(targetDir.y) * Mathf.Rad2Deg;
+        }
+        else
+        {
+            if (pitchDif > 0)
+                config.pitch = centralPitch - pitchOffsetMax;
+            else
+                config.pitch = centralPitch + pitchOffsetMax;
         }
         config.roll = roll;
         config.fov = fov;
