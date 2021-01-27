@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework.Internal.Filters;
 using UnityEngine;
 
 public class Rail : MonoBehaviour
@@ -80,5 +81,66 @@ public class Rail : MonoBehaviour
                 Gizmos.DrawLine(nodes[nodes.Count-1].transform.position, nodes[0].transform.position);
 
         }
+    }
+
+    public Vector3 findNearestPoint(Vector3 targetPosition)
+    {
+        Vector3 closest = Vector3.zero;
+        float smalestDistance = Mathf.Infinity;
+        foreach (var node in nodes)
+        {
+            float dist = Vector3.Distance(targetPosition, node.transform.position);
+            if (dist < smalestDistance)
+            {
+                smalestDistance = dist;
+                closest = node.transform.position;
+            }
+        }
+
+        int index = nodes.FindIndex(x => x.transform.position == closest);
+
+        Vector3 pointPrevious;
+        if (index == 0 && !isLoop)
+            pointPrevious = nodes[0].transform.position;
+        else
+        {
+            if (index == 0 && isLoop)
+                index = nodes.Count - 1;
+            Vector3 PreviousNodePosition = nodes[index - 1].transform.position;
+            float distancePrevious = findProjectedDistance(targetPosition, closest, PreviousNodePosition);
+            distancePrevious = Mathf.Clamp(distancePrevious, 0, Vector3.Distance(closest, PreviousNodePosition));
+            pointPrevious = Vector3.Lerp(closest, PreviousNodePosition, distancePrevious);
+        }
+
+        Vector3 pointNext;
+        if (index == nodes.Count - 1 && !isLoop)
+            pointNext = nodes[nodes.Count - 1].transform.position;
+        else
+        {
+            if (index == nodes.Count - 1 && isLoop)
+                index = 0;
+            Vector3 NextNodePosition = nodes[index + 1].transform.position;
+            float distanceNext = findProjectedDistance(targetPosition, closest, NextNodePosition);
+            distanceNext = Mathf.Clamp(distanceNext, 0, Vector3.Distance(closest, NextNodePosition));
+            pointNext = Vector3.Lerp(closest, NextNodePosition, distanceNext);
+        }
+
+
+        float targetToPointNext = Vector3.Distance(targetPosition, pointNext);
+        float targetToPointPrevious = Vector3.Distance(targetPosition, pointPrevious);
+
+        if (targetToPointPrevious > targetToPointNext)
+            return pointPrevious;
+        else 
+            return pointNext;
+    }
+
+    private float findProjectedDistance(Vector3 targetPosition,Vector3 nearestNodePosition, Vector3 otherNodePosition)
+    {
+        Vector3 targetDirection = targetPosition - nearestNodePosition;
+        Vector3 otherNodeDiretion = otherNodePosition - nearestNodePosition;
+        float projectedDistance = (Vector3.Dot(otherNodeDiretion, targetDirection)) /
+                                  Vector3.Distance(nearestNodePosition, otherNodeDiretion);
+        return projectedDistance;
     }
 }

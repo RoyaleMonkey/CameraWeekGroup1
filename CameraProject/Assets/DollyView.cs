@@ -11,6 +11,7 @@ public class DollyView : AView
     public Rail rail = null;
     public float railPosition = 0;
     public float speed;
+    public bool isAuto = false;
 
     private void Update()
     {
@@ -33,7 +34,7 @@ public class DollyView : AView
         config.roll = roll;
         config.distance = distance;
         config.fov = fov;
-        config.pivot = rail.GetPosition(railPosition);
+        config.pivot = isAuto ? rail.findNearestPoint(target.position) : rail.GetPosition(railPosition);
         Vector3 targetDir = (target.position - config.pivot).normalized;
         config.yaw = Mathf.Atan2(targetDir.x, targetDir.z) * Mathf.Rad2Deg;
         config.pitch = -Mathf.Asin(targetDir.y) * Mathf.Rad2Deg;
