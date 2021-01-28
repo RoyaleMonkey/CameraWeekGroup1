@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ViewVolumeBlender : MonoBehaviour
 {
-    private List<AViewVolume> activeViewVolumes;
-    private Dictionary<AView, List<AViewVolume>> volumesPerView;
+    private List<AViewVolume> activeViewVolumes = new List<AViewVolume>();
+    private Dictionary<AView, List<AViewVolume>> volumesPerView = new Dictionary<AView, List<AViewVolume>>();
 
     #region Singleton
 
@@ -46,7 +46,20 @@ public class ViewVolumeBlender : MonoBehaviour
             volumesPerView[volume.view].Remove(volume);
 
             if (volumesPerView[volume.view].Count == 0)
+            {
                 volumesPerView.Remove(volume.view);
+                volume.view.SetActive(false);
+            }
+        }
+    }
+
+    void OnGUI()
+    {
+        Rect rect = Rect.zero;
+        foreach (var volume in activeViewVolumes)
+        {
+            GUI.Label(rect, volume.name);
+            rect.position += Vector2.up * -20;
         }
     }
 }

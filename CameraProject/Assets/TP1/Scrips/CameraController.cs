@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [Range(0, 1)] public float configWeight = 0;
-
     public List<AView> activeViews = new List<AView>();
     public CameraConfiguration targetConfig;
     public CameraConfiguration activeConfig;

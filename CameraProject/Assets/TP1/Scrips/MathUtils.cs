@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MathUtils : MonoBehaviour
+public class MathUtils
 {
 
     public static Vector3 LinearBezier(Vector3 A, Vector3 B, float t)
