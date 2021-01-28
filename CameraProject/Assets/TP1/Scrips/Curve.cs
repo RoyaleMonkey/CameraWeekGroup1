@@ -9,7 +9,7 @@ public class Curve : MonoBehaviour
 
     Vector3 GetPosition(float t) => MathUtils.CubicBezier(A, B, C, D, t);
 
-    Vector3 GetPosition(float t, Matrix4x4 localToWorldMatrix)
+    public Vector3 GetPosition(float t, Matrix4x4 localToWorldMatrix)
     {
         Vector3 pLocal = GetPosition(t);
         Vector3 pWorld = localToWorldMatrix.MultiplyPoint(pLocal);
