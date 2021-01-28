@@ -99,13 +99,19 @@ public class CameraController : MonoBehaviour
     {
         CameraConfiguration newConfig = new CameraConfiguration();
         float weight = 0;
+        Vector2 sum = Vector2.zero;
 
         foreach (var view in activeViews)
         {
             CameraConfiguration config = view.GetConfiguration();
             newConfig += config*view.weight;
             weight += view.weight;
+
+            sum += new Vector2(Mathf.Cos(config.yaw * Mathf.Deg2Rad),
+                Mathf.Sin(config.yaw * Mathf.Deg2Rad)) * view.weight;
         }
+
+        newConfig.yaw = Vector2.SignedAngle(Vector2.right, sum);
 
         if (weight != 0)
             newConfig /= weight;

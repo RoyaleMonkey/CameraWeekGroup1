@@ -104,9 +104,12 @@ public class Rail : MonoBehaviour
             pointPrevious = nodes[0].transform.position;
         else
         {
+            Vector3 PreviousNodePosition;
             if (index == 0 && isLoop)
-                index = nodes.Count - 1;
-            Vector3 PreviousNodePosition = nodes[index - 1].transform.position;
+                PreviousNodePosition = nodes[nodes.Count - 1].transform.position;
+            else
+                PreviousNodePosition = nodes[index - 1].transform.position;
+
             float distancePrevious = findProjectedDistance(targetPosition, closest, PreviousNodePosition);
             distancePrevious = Mathf.Clamp(distancePrevious, 0, Vector3.Distance(closest, PreviousNodePosition));
             pointPrevious = Vector3.Lerp(closest, PreviousNodePosition, distancePrevious/ Vector3.Distance(closest, PreviousNodePosition));
@@ -117,9 +120,12 @@ public class Rail : MonoBehaviour
             pointNext = nodes[nodes.Count - 1].transform.position;
         else
         {
+            Vector3 NextNodePosition;
             if (index == nodes.Count - 1 && isLoop)
-                index = 0;
-            Vector3 NextNodePosition = nodes[index + 1].transform.position;
+                NextNodePosition = nodes[0].transform.position;
+            else 
+                NextNodePosition = nodes[index + 1].transform.position;
+
             float distanceNext = findProjectedDistance(targetPosition, closest, NextNodePosition);
             distanceNext = Mathf.Clamp(distanceNext, 0, Vector3.Distance(closest, NextNodePosition));
             pointNext = Vector3.Lerp(closest, NextNodePosition, distanceNext/ Vector3.Distance(closest, NextNodePosition));
@@ -137,8 +143,14 @@ public class Rail : MonoBehaviour
 
     private float findProjectedDistance(Vector3 targetPosition,Vector3 nearestNodePosition, Vector3 otherNodePosition)
     {
-        Vector3 targetNormal = (otherNodePosition - nearestNodePosition).normalized;
-        float projectedDistance = Vector3.Project(targetPosition - nearestNodePosition,targetNormal).magnitude;
+        //Vector3 targetNormal = (otherNodePosition - nearestNodePosition).normalized;
+        //float projectedDistance = Vector3.Project(targetPosition - nearestNodePosition,targetNormal).magnitude;
+        //return projectedDistance;
+
+        Vector3 targetDirection = targetPosition - nearestNodePosition;
+        Vector3 otherNodeDiretion = (otherNodePosition - nearestNodePosition).normalized;
+        float projectedDistance = (Vector3.Dot(targetDirection, otherNodeDiretion));
+                                  
         return projectedDistance;
     }
 }
