@@ -55,11 +55,12 @@ public class ViewVolumeBlender : MonoBehaviour
 
     void OnGUI()
     {
-        Rect rect = Rect.zero;
+        Rect rect = new Rect(0, 0, 300, 50);
         foreach (var volume in activeViewVolumes)
         {
+            GUI.color = Color.red;
             GUI.Label(rect, volume.name);
-            rect.position += Vector2.up * -20;
+            rect.position += Vector2.up * 50;
         }
     }
 }

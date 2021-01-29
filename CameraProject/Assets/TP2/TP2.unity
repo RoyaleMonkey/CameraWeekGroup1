@@ -441,6 +441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   priority: 0
   view: {fileID: 1404230012}
+  target: {fileID: 362612458}
 --- !u!65 &1404230014
 BoxCollider:
   m_ObjectHideFlags: 0
