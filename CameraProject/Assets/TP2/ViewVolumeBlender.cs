@@ -24,6 +24,31 @@ public class ViewVolumeBlender : MonoBehaviour
         else
             instance = this;
     }
+
+    private void Update()
+    {
+        int maxPrio = 0;
+        float weightSum = 0;
+
+        foreach (var volume in activeViewVolumes)
+        {
+            volume.view.weight = 0;
+            if (volume.priority > maxPrio)
+            {
+                maxPrio = volume.priority;
+                weightSum = volume.ComputeSelfWeight();
+            }
+            else if (volume.priority == maxPrio)
+                weightSum += volume.ComputeSelfWeight();
+        }
+
+        foreach (var volume in activeViewVolumes)
+        {
+            if (volume.priority == maxPrio)
+                volume.view.weight = Mathf.Max(volume.view.weight, volume.ComputeSelfWeight() / weightSum);
+        }
+    }
+
     public void AddVolume(AViewVolume volume)
     {
         activeViewVolumes.Add(volume);

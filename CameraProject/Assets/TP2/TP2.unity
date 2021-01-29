@@ -439,7 +439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97891a38a8a8314281fa3a1a9b82a7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  priority: 0
+  priority: 1
   view: {fileID: 1404230012}
   target: {fileID: 362612458}
 --- !u!65 &1404230014
