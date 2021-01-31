@@ -25,7 +25,7 @@ public class ViewVolumeBlender : MonoBehaviour
             instance = this;
     }
 
-    private void Update()
+    private void UpdateWeight()
     {
         int maxPrio = 0;
         float weightSum = 0;
@@ -60,6 +60,7 @@ public class ViewVolumeBlender : MonoBehaviour
 
         volumesPerView[volume.view].Add(volume);
 
+        UpdateWeight();
     }
 
     public void RemoveVolume(AViewVolume volume)
@@ -76,6 +77,7 @@ public class ViewVolumeBlender : MonoBehaviour
                 volume.view.SetActive(false);
             }
         }
+        UpdateWeight();
     }
 
     void OnGUI()

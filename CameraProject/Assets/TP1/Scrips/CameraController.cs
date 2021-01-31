@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour
     public CameraConfiguration targetConfig;
     public CameraConfiguration activeConfig;
     private Camera cameraComponent = null;
+    private bool isCutRequested = false;
 
     public float cameraSpeed = 2.0f;
 
@@ -41,6 +42,8 @@ public class CameraController : MonoBehaviour
 
     public void RemoveView(AView view) => activeViews.Remove(view);
 
+    public void Cut() => isCutRequested = true;
+
     public void SetConfig(CameraConfiguration config)
     {
 
@@ -55,7 +58,7 @@ public class CameraController : MonoBehaviour
         if (cameraComponent == null)
             cameraComponent = GetComponent<Camera>();
 
-        if(cameraSpeed * Time.deltaTime < 1)
+        if(cameraSpeed * Time.deltaTime < 1 && !isCutRequested)
         {
             float yawDif = targetConfig.yaw - activeConfig.yaw;
             if (Mathf.Abs(yawDif) > 180)
@@ -70,6 +73,7 @@ public class CameraController : MonoBehaviour
         else
         {
             activeConfig = config;
+            isCutRequested = false;
         }
 
         Quaternion orientation = Quaternion.Euler(activeConfig.pitch, activeConfig.yaw, activeConfig.roll);
@@ -79,19 +83,19 @@ public class CameraController : MonoBehaviour
         cameraComponent.fieldOfView = activeConfig.fov;
     }
 
-    public CameraConfiguration LerpConfigs(CameraConfiguration configA, CameraConfiguration configB, float configWeight)
-    {
-        CameraConfiguration lerpedConfig = new CameraConfiguration();
+    //public CameraConfiguration LerpConfigs(CameraConfiguration configA, CameraConfiguration configB, float configWeight)
+    //{
+    //    CameraConfiguration lerpedConfig = new CameraConfiguration();
 
-        lerpedConfig.distance = Mathf.Lerp(configA.distance, configB.distance, configWeight);
-        lerpedConfig.yaw = Mathf.Lerp(configA.yaw, configB.yaw, configWeight);
-        lerpedConfig.pitch = Mathf.Lerp(configA.pitch, configB.pitch, configWeight);
-        lerpedConfig.roll = Mathf.Lerp(configA.roll, configB.roll, configWeight);
-        lerpedConfig.fov = Mathf.Lerp(configA.fov, configB.fov, configWeight);
-        lerpedConfig.pivot = Vector3.Lerp(configA.pivot, configB.pivot, configWeight);
-        targetConfig = lerpedConfig;
-        return lerpedConfig;
-    }
+    //    lerpedConfig.distance = Mathf.Lerp(configA.distance, configB.distance, configWeight);
+    //    lerpedConfig.yaw = Mathf.Lerp(configA.yaw, configB.yaw, configWeight);
+    //    lerpedConfig.pitch = Mathf.Lerp(configA.pitch, configB.pitch, configWeight);
+    //    lerpedConfig.roll = Mathf.Lerp(configA.roll, configB.roll, configWeight);
+    //    lerpedConfig.fov = Mathf.Lerp(configA.fov, configB.fov, configWeight);
+    //    lerpedConfig.pivot = Vector3.Lerp(configA.pivot, configB.pivot, configWeight);
+    //    targetConfig = lerpedConfig;
+    //    return lerpedConfig;
+    //}
 
     private CameraConfiguration InterpolateView()
     {
